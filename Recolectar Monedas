@@ -1,0 +1,21 @@
+local moneda = script.Parent
+local debounce = false   -- evita que cuente varias veces
+
+moneda.Touched:Connect(function(hit)
+	local player = game.Players:GetPlayerFromCharacter(hit.Parent)
+	if player and not debounce then
+		debounce = true  -- bloquea repeticiones
+		-- Buscar o crear la leaderstats
+		local leaderstats = player:FindFirstChild("leaderstats")
+		if leaderstats then
+			local monedas = leaderstats:FindFirstChild("Monedas")
+			if monedas then
+				monedas.Value = monedas.Value + 1
+			end
+		end
+		-- Desaparecer la moneda
+		moneda:Destroy()
+	end
+end)
+
+--El video en donde uso este código es: 
