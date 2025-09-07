@@ -1,0 +1,7 @@
+-- Script para que la moneda gire
+while true do
+	script.Parent.Orientation = script.Parent.Orientation + Vector3.new(0,5,0)
+	wait(0.05)
+end
+
+--El video en donde estoy usando este código es: 
