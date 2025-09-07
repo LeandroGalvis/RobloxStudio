@@ -1,0 +1,14 @@
+-- Script para crear puntos
+game.Players.PlayerAdded:Connect(function(player)
+	-- Crear carpeta leaderstats
+	local leaderstats = Instance.new("Folder")
+	leaderstats.Name = "leaderstats"
+	leaderstats.Parent = player
+
+	-- Crear el contador de Monedas
+	local coins = Instance.new("IntValue")
+	coins.Name = "Monedas"
+	coins.Value = 0
+	coins.Parent = leaderstats
+end)
+--El video en donde uso este código es: 
