@@ -1,0 +1,30 @@
+-- Script dentro de la puerta (Door)
+
+local door = script.Parent
+local closedPosition = door.Position -- posición inicial de la puerta
+local openOffset = Vector3.new(10, 0, 0) -- cuánto se moverá la puerta al abrirse
+local isOpen = false
+local debounce = false
+
+-- Función para abrir la puerta
+local function openDoor()
+	if not debounce and not isOpen then
+		debounce = true
+		door.Position = closedPosition + openOffset
+		isOpen = true
+		wait(1) -- tiempo que la puerta permanece abierta
+		door.Position = closedPosition
+		isOpen = false
+		debounce = false
+	end
+end
+
+-- Detecta cuando un jugador toca la puerta
+door.Touched:Connect(function(hit)
+	local character = hit.Parent
+	if character:FindFirstChild("Humanoid") then
+		openDoor()
+	end
+end)
+
+-- El video en donde uso este código es: 
