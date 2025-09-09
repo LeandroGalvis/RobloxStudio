@@ -1,0 +1,19 @@
+-- Script para puerta con ProximityPrompt
+
+local door = script.Parent
+local prompt = door:WaitForChild("ProximityPrompt")
+local closedPosition = door.Position
+local openOffset = Vector3.new(0, 0, 10)
+local isOpen = false
+
+prompt.Triggered:Connect(function(player)
+	if not isOpen then
+		door.Position = closedPosition + openOffset
+		isOpen = true
+		wait(3)
+		door.Position = closedPosition
+		isOpen = false
+	end
+end)
+
+--El video en donde uso este código es: 
