@@ -1,0 +1,50 @@
+local npc = script.Parent
+local humanoid = npc:WaitForChild("Humanoid")
+local root = npc:WaitForChild("HumanoidRootPart")
+npc.PrimaryPart = root
+
+local PathfindingService = game:GetService("PathfindingService")
+
+local function seguirAlJugador(player)
+	while true do
+		task.wait(0.7)
+		local char = player.Character
+		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		if not hrp then continue end
+
+		-- 1) Crear y calcular la ruta
+		local path = PathfindingService:CreatePath({
+			AgentRadius = 2,
+			AgentHeight = 5,
+			AgentCanJump = true
+		})
+		path:ComputeAsync(root.Position, hrp.Position)
+
+		if path.Status == Enum.PathStatus.Success then
+			-- 2) Obtener waypoints y MOVER al Humanoid
+			local waypoints = path:GetWaypoints()
+			for _, wp in ipairs(waypoints) do
+				if wp.Action == Enum.PathWaypointAction.Jump then
+					humanoid.Jump = true
+				end
+				humanoid:MoveTo(wp.Position)
+				-- Espera a llegar o corta si tarda demasiado
+				local reached = humanoid.MoveToFinished:Wait(2)
+				if not reached then break end
+			end
+		else
+			-- Ruta fallida: movimiento directo como fallback
+			humanoid:MoveTo(hrp.Position)
+		end
+	end
+end
+
+-- Arranca cuando el jugador aparece
+game.Players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(function()
+		seguirAlJugador(player)
+	end)
+end)
+
+
+--El video en donde estoy usando este código es: 
