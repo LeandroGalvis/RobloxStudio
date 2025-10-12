@@ -1,0 +1,17 @@
+-- Script para hacer que un objeto desaparezca al tocarlo
+local objeto = script.Parent
+
+-- Conexión al evento Touch
+objeto.Touched:Connect(function(parte)
+	-- Detectar si lo tocó un jugador
+	local jugador = game.Players:GetPlayerFromCharacter(parte.Parent)
+	if jugador then
+		-- Hacer que el objeto desaparezca
+		objeto.Transparency = 1
+		objeto.CanCollide = false
+		
+		-- (Opcional) Destruirlo completamente después de 1 segundo
+		wait(1)
+		objeto:Destroy()
+	end
+end)
