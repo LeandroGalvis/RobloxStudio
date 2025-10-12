@@ -1,0 +1,17 @@
+-- Script para hacer que un objeto flote suavemente
+local objeto = script.Parent
+local altura = 3        -- Cuánto sube el objeto
+local velocidad = 2     -- Qué tan rápido se mueve
+
+-- Guardar posición inicial
+local posicionInicial = objeto.Position
+
+while true do
+	for i = 0, math.pi * 2, 0.05 do
+		local nuevaAltura = math.sin(i) * altura
+		objeto.Position = Vector3.new(posicionInicial.X, posicionInicial.Y + nuevaAltura, posicionInicial.Z)
+		wait(velocidad / 100)
+	end
+end
+
+--El video en donde uso este código es 
