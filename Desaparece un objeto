@@ -15,3 +15,5 @@ objeto.Touched:Connect(function(parte)
 		objeto:Destroy()
 	end
 end)
+
+--El video en donde uso este código es: 
