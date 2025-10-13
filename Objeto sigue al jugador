@@ -1,0 +1,17 @@
+-- Script para que un objeto siga al jugador
+local seguidor = script.Parent
+local velocidad = 0.1 -- Ajusta qué tan rápido sigue
+
+game.Players.PlayerAdded:Connect(function(jugador)
+	jugador.CharacterAdded:Connect(function(personaje)
+		while personaje and personaje:FindFirstChild("HumanoidRootPart") do
+			local objetivo = personaje:FindFirstChild("HumanoidRootPart").Position
+			local posicionActual = seguidor.Position
+			local nuevaPosicion = posicionActual:Lerp(objetivo + Vector3.new(0, 3, -3), velocidad)
+			seguidor.Position = nuevaPosicion
+			wait(0.03)
+		end
+	end)
+end)
+
+-El video donde uso este código es: 
