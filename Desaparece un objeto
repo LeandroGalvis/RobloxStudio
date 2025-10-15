@@ -16,4 +16,4 @@ objeto.Touched:Connect(function(parte)
 	end
 end)
 
---El video en donde uso este código es: 
+--El video en donde uso este código es: https://youtu.be/02mwhokLHGA
