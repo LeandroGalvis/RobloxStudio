@@ -1,0 +1,65 @@
+-- La parte que funciona como zona de daño
+local zona = script.Parent
+
+-- Cantidad de vida que se va a quitar al jugador
+local dano = 5
+
+-- Tiempo (en segundos) entre cada daño
+local intervalo = 1
+
+
+-- Servicio que nos permite obtener a los jugadores
+local Players = game:GetService("Players")
+
+-- Servicio para trabajar con el mundo (Workspace)
+local Workspace = game:GetService("Workspace")
+
+
+-- Creamos parámetros para detectar colisiones dentro de una zona
+local params = OverlapParams.new()
+
+-- Indicamos que solo vamos a detectar los objetos que indiquemos (whitelist)
+params.FilterType = Enum.RaycastFilterType.Whitelist
+
+
+-- Bucle infinito que se ejecuta todo el tiempo
+while true do
+
+	-- Recorremos todos los jugadores del juego
+	for _, player in pairs(Players:GetPlayers()) do
+
+		-- Obtenemos el personaje del jugador
+		local character = player.Character
+		if not character then continue end
+
+
+		-- Buscamos el Humanoid (la vida del jugador)
+		local humanoid = character:FindFirstChild("Humanoid")
+		if not humanoid then continue end
+
+
+		-- Indicamos que solo queremos detectar partes del personaje
+		params.FilterDescendantsInstances = {character}
+
+
+		-- Detectamos si alguna parte del personaje está dentro de la zona
+		local parts = Workspace:GetPartBoundsInBox(
+			zona.CFrame, -- Posición y rotación de la zona
+			zona.Size,   -- Tamaño de la zona
+			params       -- Parámetros de detección
+		)
+
+
+		-- Si hay al menos una parte dentro de la zona
+		if #parts > 0 then
+			-- Quitamos vida al jugador
+			humanoid:TakeDamage(dano)
+		end
+	end
+
+
+	-- Esperamos el tiempo definido antes de volver a hacer daño
+	task.wait(intervalo)
+end
+
+-- Este código lo uso en este video: 
