@@ -64,4 +64,4 @@ boton.Touched:Connect(function(hit)
 	end
 end)
 
--- Este código lo uso en este video: 
+-- Este código lo uso en este video: https://www.youtube.com/watch?v=eSlTop27CSw
