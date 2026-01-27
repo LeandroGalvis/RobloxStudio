@@ -1,0 +1,67 @@
+-- Referencia al botón (el Part que se toca)
+local boton = script.Parent
+
+-- Referencia al objeto que se va a mostrar u ocultar
+local objeto = workspace.Objeto
+
+
+-- Variable que indica si el objeto está activado o no
+-- false = oculto / true = visible
+local activado = false
+
+-- Variable para evitar que el botón se active muchas veces seguidas
+local debounce = false
+
+
+-- Evento que se ejecuta cuando algo toca el botón
+boton.Touched:Connect(function(hit)
+
+	-- Si el botón está bloqueado, no hace nada
+	if debounce then return end
+
+	-- Obtenemos el personaje que tocó el botón
+	local character = hit.Parent
+
+	-- Verificamos que quien tocó el botón sea un jugador
+	if character:FindFirstChild("Humanoid") then
+
+		-- Activamos el bloqueo para evitar múltiples activaciones
+		debounce = true
+
+		-- Cambiamos el estado: si estaba apagado, se enciende; si estaba encendido, se apaga
+		activado = not activado
+
+
+		-- SI el objeto está activado
+		if activado then
+			-- Hacemos visible el objeto
+			objeto.Transparency = 0
+
+			-- Permitimos que el jugador choque con el objeto
+			objeto.CanCollide = true
+
+			-- Cambiamos el color del botón a verde
+			boton.BrickColor = BrickColor.new("Lime green")
+
+			-- SI el objeto está desactivado
+		else
+			-- Hacemos invisible el objeto
+			objeto.Transparency = 1
+
+			-- Evitamos que el jugador choque con el objeto
+			objeto.CanCollide = false
+
+			-- Cambiamos el color del botón a rojo
+			boton.BrickColor = BrickColor.new("Really red")
+		end
+
+
+		-- Esperamos medio segundo antes de permitir otra activación
+		task.wait(0.5)
+
+		-- Quitamos el bloqueo del botón
+		debounce = false
+	end
+end)
+
+-- Este código lo uso en este video: 
