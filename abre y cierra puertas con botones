@@ -1,0 +1,61 @@
+-- Referencia a la puerta que se va a abrir y cerrar
+local puerta = workspace:WaitForChild("Puerta")
+
+-- Referencias a los dos botones que controlan la puerta
+local boton1 = workspace:WaitForChild("Boton1")
+local boton2 = workspace:WaitForChild("Boton2")
+
+
+-- Variable que guarda si la puerta está abierta o cerrada
+local abierta = false
+
+-- Evita que el botón se active muchas veces seguidas
+local debounce = false
+
+-- Distancia que la puerta sube o baja al abrirse o cerrarse
+local distancia = 8
+
+
+-- Función que abre o cierra la puerta
+local function alternarPuerta(hit)
+
+	-- Si el botón está bloqueado, no hace nada
+	if debounce then return end
+
+
+	-- Obtenemos el personaje que tocó el botón
+	local character = hit.Parent
+
+	-- Verificamos que sea un jugador (que tenga Humanoid)
+	local humanoid = character:FindFirstChild("Humanoid")
+	if not humanoid then return end
+
+
+	-- Activamos el bloqueo para evitar múltiples activaciones
+	debounce = true
+
+
+	-- Si la puerta está cerrada, la abrimos
+	if not abierta then
+		-- Subimos la puerta en el eje Y
+		puerta.Position = puerta.Position + Vector3.new(0, distancia, 0)
+		abierta = true
+	else
+		-- Si está abierta, la bajamos
+		puerta.Position = puerta.Position - Vector3.new(0, distancia, 0)
+		abierta = false
+	end
+
+
+	-- Pequeña espera antes de permitir otro toque
+	task.wait(0.5)
+	debounce = false
+end
+
+
+-- Conectamos la función a los dos botones
+boton1.Touched:Connect(alternarPuerta)
+boton2.Touched:Connect(alternarPuerta)
+
+
+--Este código lo uso en este video: 
