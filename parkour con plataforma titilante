@@ -1,0 +1,39 @@
+-- Referencia a la plataforma (la parte donde está el script)
+local plataforma = script.Parent
+
+
+-- Tiempo (en segundos) que la plataforma estará visible
+local tiempoVisible = 2
+
+-- Tiempo (en segundos) que la plataforma estará invisible
+local tiempoInvisible = 2
+
+
+-- Bucle infinito que se ejecuta todo el tiempo
+while true do
+
+	-- 👉 PLATAFORMA VISIBLE
+	-- La plataforma se puede ver
+	plataforma.Transparency = 0
+
+	-- El jugador puede pararse encima
+	plataforma.CanCollide = true
+
+
+	-- Esperamos el tiempo visible
+	task.wait(tiempoVisible)
+
+
+	-- 👉 PLATAFORMA INVISIBLE
+	-- La plataforma no se puede ver
+	plataforma.Transparency = 1
+
+	-- El jugador atraviesa la plataforma
+	plataforma.CanCollide = false
+
+
+	-- Esperamos el tiempo invisible
+	task.wait(tiempoInvisible)
+end
+
+-- Este código lo uso en este video: 
