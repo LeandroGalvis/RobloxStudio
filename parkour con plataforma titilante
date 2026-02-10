@@ -36,4 +36,4 @@ while true do
 	task.wait(tiempoInvisible)
 end
 
--- Este código lo uso en este video: 
+-- Este código lo uso en este video: https://www.youtube.com/watch?v=50JG6i5z33A
