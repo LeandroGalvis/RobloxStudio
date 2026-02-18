@@ -1,0 +1,70 @@
+--Tutorial 23: Partes que se achican y se agrandan
+--Hacer un part y colocar este código dentro, luego duplicar las part y repartirlas por toda la zona
+-- Referencia a la plataforma
+local part = script.Parent
+
+-- Guardamos el tamaño original
+local baseSize = part.Size
+local baseCFrame = part.CFrame
+
+-- Tamaños objetivo (en X y Z)
+local sizeBig = Vector3.new(
+	baseSize.X * 1.6,
+	baseSize.Y,
+	baseSize.Z * 1.6
+)
+
+local sizeSmall = Vector3.new(
+	baseSize.X * 0.6,
+	baseSize.Y,
+	baseSize.Z * 0.6
+)
+
+-- Control de estado
+local growing = true
+
+-- Velocidad del cambio
+local speed = math.random(6, 12) / 10
+
+--------------------------------------------------
+-- LOOP CONSTANTE
+--------------------------------------------------
+game:GetService("RunService").Heartbeat:Connect(function(dt)
+
+	-- Elegimos el tamaño al que queremos llegar
+	local targetSize
+	if growing then
+		targetSize = sizeBig
+	else
+		targetSize = sizeSmall
+	end
+
+	-- Cambio suave de tamaño
+	part.Size = part.Size:Lerp(targetSize, dt * speed)
+
+	-- Ajustamos posicion para que no se hunda
+	local heightOffset = (part.Size.Y - baseSize.Y) / 2
+	part.CFrame = baseCFrame * CFrame.new(0, heightOffset, 0)
+
+	-- Cuando llega al tamaño objetivo, cambia de estado
+	if (part.Size - targetSize).Magnitude < 0.1 then
+		growing = not growing
+	end
+end)
+
+
+--Hacer una part que sea como suelo para que cuando se caiga el jugador se muera, llamarle a la part "SueloMuere".
+
+
+local part = workspace.SueloMuere
+
+part.Touched:Connect(function(hit)
+	local character = hit.Parent
+	local humanoid = character:FindFirstChild("Humanoid")
+
+	if humanoid then
+		humanoid.Health = 0
+	end
+end)
+
+--Este código lo uso en este video: 
