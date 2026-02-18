@@ -1,0 +1,47 @@
+--Plataforma móvil
+--Hacer una part, llamarla "Plataforma", dentro el script de abajo y un Attachment llamado "Attach", dos part más, "PuntoA" y "PuntoB"
+local TweenService = game:GetService("TweenService")
+
+local plataforma = script.Parent
+local puntoA = workspace:WaitForChild("PuntoA")
+local puntoB = workspace:WaitForChild("PuntoB")
+
+-- Creamos un Attachment si no existe
+local attach = plataforma:FindFirstChild("Attach")
+if not attach then
+	attach = Instance.new("Attachment")
+	attach.Name = "Attach"
+	attach.Parent = plataforma
+end
+
+-- LinearVelocity para mover la plataforma
+local lv = Instance.new("LinearVelocity")
+lv.Attachment0 = attach
+lv.MaxForce = math.huge
+lv.Parent = plataforma
+
+local velocidad = 8
+local espera = 1
+
+local function moverA(destino)
+	local direccion = (destino.Position - plataforma.Position)
+	lv.VectorVelocity = direccion.Unit * velocidad
+
+	-- Espera hasta llegar cerca
+	while direccion.Magnitude > 1 do
+		task.wait()
+		direccion = (destino.Position - plataforma.Position)
+	end
+
+	lv.VectorVelocity = Vector3.zero
+end
+
+while true do
+	moverA(puntoA)
+	task.wait(espera)
+
+	moverA(puntoB)
+	task.wait(espera)
+end
+
+--Este código lo estoy usando en este video: 
