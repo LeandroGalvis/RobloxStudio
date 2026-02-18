@@ -1,0 +1,61 @@
+--Tutorial 24: Raycast con parte visual y daño
+--Hacer un part con nombre "BaseLaser", agregarle un attachment llamado "Origen", dentro de BaseLaser va este código
+local base = script.Parent
+local origen = base:WaitForChild("Origen")
+
+local alcance = 60
+local dano = 10
+local velocidadGiro = 60 -- grados por segundo
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local rayParams = RaycastParams.new()
+rayParams.FilterType = Enum.RaycastFilterType.Blacklist
+rayParams.FilterDescendantsInstances = {base}
+
+local angulo = 0
+
+-- Parte visual del laser
+local laserVisual = Instance.new("Part")
+laserVisual.Anchored = true
+laserVisual.CanCollide = false
+laserVisual.Material = Enum.Material.Neon
+laserVisual.Color = Color3.fromRGB(255, 0, 0)
+laserVisual.Parent = workspace
+
+RunService.Heartbeat:Connect(function(dt)
+	-- Girar el laser
+	angulo += velocidadGiro * dt
+	local direccion = CFrame.Angles(0, math.rad(angulo), 0).LookVector
+
+	-- Raycast
+	local resultado = workspace:Raycast(
+		origen.WorldPosition,
+		direccion * alcance,
+		rayParams
+	)
+
+	local distancia = alcance
+
+	if resultado then
+		distancia = resultado.Distance
+
+		local hit = resultado.Instance
+		local character = hit:FindFirstAncestorOfClass("Model")
+		if character then
+			local humanoid = character:FindFirstChild("Humanoid")
+			if humanoid then
+				humanoid:TakeDamage(dano)
+			end
+		end
+	end
+
+	-- Ajustar laser visual
+	laserVisual.Size = Vector3.new(0.2, 0.2, distancia)
+	laserVisual.CFrame =
+		CFrame.new(origen.WorldPosition, origen.WorldPosition + direccion)
+		* CFrame.new(0, 0, -distancia / 2)
+end)
+
+--Este código lo uso en este video: 
