@@ -1,0 +1,6 @@
+--Hacer un part y colocar este código dentro
+while true do
+	script.Parent.Velocity = script.Parent.CFrame.lookVector *15
+	wait(0.1)
+end
+--Este código lo uso en este video: 
