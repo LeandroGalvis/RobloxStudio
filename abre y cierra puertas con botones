@@ -58,4 +58,4 @@ boton1.Touched:Connect(alternarPuerta)
 boton2.Touched:Connect(alternarPuerta)
 
 
---Este código lo uso en este video: 
+--Este código lo uso en este video: https://www.youtube.com/watch?v=aLwP-0EFQts
