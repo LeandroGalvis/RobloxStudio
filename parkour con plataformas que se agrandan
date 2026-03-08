@@ -67,4 +67,4 @@ part.Touched:Connect(function(hit)
 	end
 end)
 
---Este código lo uso en este video: 
+--Este código lo uso en este video: https://www.youtube.com/watch?v=pmtF_8_KQ7g
