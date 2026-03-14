@@ -58,4 +58,4 @@ RunService.Heartbeat:Connect(function(dt)
 		* CFrame.new(0, 0, -distancia / 2)
 end)
 
---Este código lo uso en este video: 
+--Este código lo uso en este video: https://www.youtube.com/watch?v=chAJ1Sw_j7I
