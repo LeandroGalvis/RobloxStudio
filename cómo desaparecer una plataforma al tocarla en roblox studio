@@ -60,4 +60,4 @@ end
 -- Conectamos la función al evento Touched
 platform.Touched:Connect(onTouched)
 
---Este código lo uso en este video:
+--Este código lo uso en este video: https://www.youtube.com/watch?v=KVuOGDK7Kzs
