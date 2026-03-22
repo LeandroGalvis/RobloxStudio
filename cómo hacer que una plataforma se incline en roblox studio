@@ -1,0 +1,76 @@
+--[[
+	Tutorial 27, hago una part de 20,1,20 y coloco dentro este script
+    PLATAFORMA QUE SE INCLINA SEGUN LA POSICION DEL JUGADOR
+
+    Este script:
+    - Detecta si hay un jugador encima
+    - Calcula la posicion relativa del jugador
+    - Inclina la plataforma en base a esa posicion
+    - Vuelve a su estado normal cuando no hay nadie
+]]
+
+-- Referencia a la plataforma
+local platform = script.Parent
+
+-- Servicios necesarios
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Guardamos la rotacion original
+local originalCFrame = platform.CFrame
+
+-- Configuracion
+local MAX_TILT_ANGLE = 10 -- grados maximos de inclinacion
+local RETURN_SPEED = 5 -- velocidad para volver a posicion original
+
+-- Funcion que obtiene el jugador encima de la plataforma
+local function getPlayerOnPlatform()
+
+	for _, player in pairs(Players:GetPlayers()) do
+
+		local character = player.Character
+		if not character then continue end
+
+		local root = character:FindFirstChild("HumanoidRootPart")
+		if not root then continue end
+
+		-- Convertimos la posicion del jugador al espacio local de la plataforma
+		local relativePosition = platform.CFrame:PointToObjectSpace(root.Position)
+
+		-- Verificamos si esta dentro de los limites de la plataforma
+		if math.abs(relativePosition.X) <= platform.Size.X/2 and
+		   math.abs(relativePosition.Z) <= platform.Size.Z/2 and
+		   math.abs(relativePosition.Y) <= 5 then
+
+			return relativePosition
+		end
+	end
+
+	return nil
+end
+
+-- Loop constante
+RunService.Heartbeat:Connect(function(dt)
+
+	-- Buscamos si hay jugador encima
+	local relativePosition = getPlayerOnPlatform()
+
+	if relativePosition then
+		-- Calculamos inclinacion proporcional a la posicion del jugador
+		
+		local tiltX = -(relativePosition.Z / (platform.Size.Z/2)) * MAX_TILT_ANGLE
+		local tiltZ = (relativePosition.X / (platform.Size.X/2)) * MAX_TILT_ANGLE
+
+		-- Creamos nueva rotacion
+		local tiltCFrame =
+			CFrame.new(platform.Position) *
+			CFrame.Angles(math.rad(tiltX), 0, math.rad(tiltZ))
+
+		platform.CFrame = tiltCFrame
+	else
+		-- Si no hay jugador, vuelve suavemente a su posicion original
+		platform.CFrame = platform.CFrame:Lerp(originalCFrame, dt * RETURN_SPEED)
+	end
+end)
+
+--Este código lo uso en este video: 
