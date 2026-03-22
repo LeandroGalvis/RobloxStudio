@@ -1,0 +1,86 @@
+--[[ 
+	Tutorial 25 - hacer que el jugador corra más rápido por un periodo de tiempo.
+	Este script va dentro de starterplayer - StarterPlayerScripts como un LocalScript
+	
+	
+    SISTEMA DE DASH CON COOLDOWN
+    Este script permite al jugador hacer un impulso hacia adelante
+    al presionar la tecla Shift.
+    Incluye:
+    - Control de cooldown
+    - Dirección según hacia dónde mira el jugador
+    - Fuerza física temporal
+]]
+
+-- Obtenemos servicios importantes
+local UserInputService = game:GetService("UserInputService") -- Detecta teclas
+local Players = game:GetService("Players") -- Maneja jugadores
+
+-- Obtenemos al jugador local
+local player = Players.LocalPlayer
+
+-- Esperamos a que el personaje cargue correctamente
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Esperamos la parte principal del personaje
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Configuración del dash
+local DASH_FORCE = 80 -- Qué tan fuerte será el impulso
+local DASH_TIME = 0.2 -- Cuánto tiempo dura el impulso
+local COOLDOWN = 2 -- Tiempo antes de poder volver a usar el dash
+
+-- Variable para saber si el dash está en cooldown
+local canDash = true
+
+-- Función que ejecuta el dash
+local function performDash()
+
+    -- Si está en cooldown, no hacemos nada
+    if not canDash then
+        return
+    end
+
+    -- Activamos cooldown
+    canDash = false
+
+    -- Creamos un objeto BodyVelocity para aplicar fuerza
+    local bodyVelocity = Instance.new("BodyVelocity")
+    
+    -- Le decimos que afecte todas las direcciones
+    bodyVelocity.MaxForce = Vector3.new(100000, 0, 100000)
+
+    -- Dirección hacia adelante según hacia dónde mira el jugador
+    bodyVelocity.Velocity = humanoidRootPart.CFrame.LookVector * DASH_FORCE
+
+    -- Lo colocamos dentro del HumanoidRootPart
+    bodyVelocity.Parent = humanoidRootPart
+
+    -- Esperamos el tiempo que dura el dash
+    task.wait(DASH_TIME)
+
+    -- Eliminamos la fuerza para que el jugador deje de impulsarse
+    bodyVelocity:Destroy()
+
+    -- Esperamos el cooldown
+    task.wait(COOLDOWN)
+
+    -- Permitimos volver a usar el dash
+    canDash = true
+end
+
+-- Detectamos cuando el jugador presiona una tecla
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+
+    -- Evita activar el dash si el jugador está escribiendo en el chat
+    if gameProcessed then
+        return
+    end
+
+    -- Detectamos si presionó la tecla Shift izquierda
+    if input.KeyCode == Enum.KeyCode.LeftShift then
+        performDash()
+    end
+end)
+
+--Este código lo uso en este video: 
