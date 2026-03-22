@@ -1,0 +1,63 @@
+--[[
+	Tutorial 26
+	Este código se coloca en la part que quieres que desaparezca al tocarla, puedes colocar otras parts al lado para que el jugador elija la part o la plataforma correcta.
+    PLATAFORMA QUE DESAPARECE AL TOCARLA
+    Cuando un jugador pisa la plataforma:
+    - Se vuelve invisible
+    - Se desactiva la colisión
+    - Espera unos segundos
+    - Vuelve a aparecer
+]]
+
+-- Referencia a la plataforma (el script está dentro del Part)
+local platform = script.Parent
+
+-- CONFIGURACIÓN
+local RESPAWN_TIME = 3 -- Tiempo que tarda en reaparecer (segundos)
+
+-- Variable para evitar que se active muchas veces seguidas
+local isActive = true
+
+-- Función que se ejecuta cuando algo toca la plataforma
+local function onTouched(hit)
+
+    -- Si ya está desactivada, no hacemos nada
+    if not isActive then
+        return
+    end
+
+    -- Verificamos que quien tocó la plataforma sea un jugador
+    local character = hit.Parent
+    local humanoid = character:FindFirstChild("Humanoid")
+
+    -- Si no es un jugador, salimos
+    if not humanoid then
+        return
+    end
+
+    -- Desactivamos la plataforma para que no se active varias veces
+    isActive = false
+
+    -- Hacemos invisible la plataforma
+    platform.Transparency = 1
+
+    -- Desactivamos la colisión para que el jugador caiga
+    platform.CanCollide = false
+
+    -- Esperamos el tiempo configurado
+    task.wait(RESPAWN_TIME)
+
+    -- Volvemos a hacer visible la plataforma
+    platform.Transparency = 0
+
+    -- Activamos nuevamente la colisión
+    platform.CanCollide = true
+
+    -- Permitimos que vuelva a activarse
+    isActive = true
+end
+
+-- Conectamos la función al evento Touched
+platform.Touched:Connect(onTouched)
+
+--Este código lo uso en este video:
