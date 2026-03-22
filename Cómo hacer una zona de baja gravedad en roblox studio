@@ -1,0 +1,92 @@
+--[[
+	Tutorial 28, se hace una part anclada, can collide en falso, transparencia 0.5 y un tamaño de 30,20,30
+    ZONA DE GRAVEDAD BAJA
+
+    Este script:
+    - Detecta cuando un jugador entra en la zona
+    - Modifica su gravedad personal
+    - Reduce la velocidad de caida
+    - Restaura valores normales cuando sale
+]]
+
+-- Referencia a la zona
+local zone = script.Parent
+
+-- Servicios necesarios
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Configuracion
+local LOW_GRAVITY = 10       -- gravedad reducida
+local NORMAL_GRAVITY = workspace.Gravity
+local JUMP_POWER = 10  -- qué tan alto va a saltar
+
+-- Tabla para guardar jugadores dentro de la zona
+local playersInside = {}
+
+--------------------------------------------------
+-- FUNCION: verificar si un jugador esta dentro
+--------------------------------------------------
+local function isPlayerInside(player)
+
+	local character = player.Character
+	if not character then return false end
+
+	local root = character:FindFirstChild("HumanoidRootPart")
+	if not root then return false end
+
+	-- Convertimos la posicion del jugador al espacio local de la zona
+	local relative = zone.CFrame:PointToObjectSpace(root.Position)
+
+	-- Verificamos si esta dentro del volumen
+	if math.abs(relative.X) <= zone.Size.X/2 and
+		math.abs(relative.Y) <= zone.Size.Y/2 and
+		math.abs(relative.Z) <= zone.Size.Z/2 then
+		return true
+	end
+
+	return false
+end
+
+--------------------------------------------------
+-- LOOP CONSTANTE
+--------------------------------------------------
+RunService.Heartbeat:Connect(function()
+
+	for _, player in pairs(Players:GetPlayers()) do
+
+		local inside = isPlayerInside(player)
+
+		local character = player.Character
+		if not character then continue end
+
+		local humanoid = character:FindFirstChild("Humanoid")
+		if not humanoid then continue end
+
+		-- Si entra en la zona
+		if inside and not playersInside[player] then
+
+			playersInside[player] = true
+
+			-- Reducimos gravedad global temporalmente
+			workspace.Gravity = LOW_GRAVITY
+
+			-- Aumentamos salto
+			humanoid.JumpHeight = JUMP_POWER
+		end
+
+		-- Si sale de la zona
+		if not inside and playersInside[player] then
+
+			playersInside[player] = nil
+
+			-- Restauramos gravedad
+			workspace.Gravity = NORMAL_GRAVITY
+
+			-- Restauramos salto
+			humanoid.JumpHeight = 10
+		end
+	end
+end)
+
+--Este código lo uso en este video:
