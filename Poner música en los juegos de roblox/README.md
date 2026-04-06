@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://github.com/LeandroGalvis/RobloxStudio/blob/main/Poner%20m%C3%BAsica%20en%20los%20juegos%20de%20roblox/Tutorial%2030.jpg?raw=true" width="500">
 </p>
-Aquí tienes el archivo que puedes abrir en Roblox Studio tal como lo viste en el video: <a href="[https://www.youtube.com/watch?v=VIDEO_ID](https://youtu.be/YoyPvOb_89w)" target="_blank">
+Aquí tienes el archivo que puedes abrir en Roblox Studio tal como lo viste en el video: <a href="https://youtu.be/YoyPvOb_89w" target="_blank">
   Cómo poner música en los juegos de roblox
 </a> 
 
