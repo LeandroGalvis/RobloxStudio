@@ -7,4 +7,4 @@ Aquí tienes el archivo que puedes abrir en Roblox Studio tal como lo viste en e
 
 Descarga aquí el tutorial 31: Cómo poner música a tus juegos en Roblox Studio versión 2: 
 
-👉 [Descargar archivo](https://github.com/LeandroGalvis/RobloxStudio/raw/refs/heads/main/Poner%20m%C3%BAsica%20en%20los%20juegos%20de%20roblox/tutorial%2030.rbxl) 👈
+👉 [Descargar archivo](https://github.com/LeandroGalvis/RobloxStudio/raw/refs/heads/main/Subir%20m%C3%BAsica%20a%20roblox%20studio/tutorial%2031.rbxl) 👈
