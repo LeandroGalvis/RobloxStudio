@@ -5,7 +5,7 @@ Aquí tienes el archivo que puedes abrir en Roblox Studio tal como lo viste en e
   Cómo subir música a Roblox Studio y usarlo en tus juegos
 </a> 
 
-Descarga aquí el tutorial 31: Cómo poner música a tus juegos en Roblox Studio versión 2: 
+Descarga aquí el tutorial 32: Cómo poner música a tus juegos en Roblox Studio versión 3: 
 
 👉 [Descargar archivo](https://github.com/LeandroGalvis/RobloxStudio/raw/refs/heads/main/controlar%20la%20repoducci%C3%B3n%20de%20una%20canci%C3%B3n/tutorial%2032.rbxl) 👈
 
