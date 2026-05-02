@@ -19,4 +19,4 @@ remote.OnClientEvent:Connect(function(newQuestion)
 
 end)
 
---Este script lo uso en este video: 
+--Este script lo uso en este video: https://youtu.be/hbtDZTydnMc
