@@ -42,4 +42,4 @@ platform.Touched:Connect(function(hit)
 		end
 	end
 end)
---Este script lo uso en este video: 
+--Este script lo uso en este video: https://youtu.be/hbtDZTydnMc
