@@ -1,0 +1,45 @@
+--Tutorial 36: haciendo un parkour de matemáticas - Script, va en cada plataforma
+-- Referencia a la plataforma
+local platform = script.Parent
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local remote = ReplicatedStorage:WaitForChild("ChangeQuestion")
+
+-- Detectar cuando algo toca la plataforma
+platform.Touched:Connect(function(hit)
+
+	-- Buscar personaje
+	local character = hit.Parent
+
+	-- Buscar humanoide
+	local humanoid = character:FindFirstChild("Humanoid")
+
+	-- Verificar que realmente sea un jugador
+	if humanoid then
+
+		-- Revisar si esta plataforma es correcta
+		local isCorrect = platform:GetAttribute("Value")
+
+		if isCorrect then
+
+			print("✅ Respuesta correcta")
+
+		else
+
+			print("❌ Respuesta incorrecta")
+
+			-- Matar jugador
+			humanoid.Health = 0
+		end
+		
+		local player = game.Players:GetPlayerFromCharacter(character)
+
+		if player then
+
+			remote:FireClient(player, "¿Cuál es el resultado de 5 + 5?")
+
+		end
+	end
+end)
+--Este script lo uso en este video: 
