@@ -1,0 +1,22 @@
+--Tutorial 36: haciendo un parkour de matemáticas - LocalScript, va en starterGUI
+local player = game.Players.LocalPlayer
+
+
+local pregunta = player.PlayerGui.ScreenGui.QuestionLabel
+
+pregunta.Text = "¿Cuál es el resultado de 2 + 2?"
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local remote = ReplicatedStorage:WaitForChild("ChangeQuestion")
+
+
+
+remote.OnClientEvent:Connect(function(newQuestion)
+
+	pregunta.Text = newQuestion
+
+end)
+
+--Este script lo uso en este video: 
