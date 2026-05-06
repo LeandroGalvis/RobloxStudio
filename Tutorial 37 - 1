@@ -1,0 +1,50 @@
+--Tutorial 37: botón de donaciones - Local Script
+-- Servicio que maneja compras de Roblox
+local MarketplaceService = game:GetService("MarketplaceService")
+
+-- Jugador local
+local player = game.Players.LocalPlayer
+
+-- Referencias a botones
+local donar1 = script.Parent.Donar1R
+local donar10 = script.Parent.Donar10R
+
+
+---------------------------------------------------
+-- IDs DE LOS DEVELOPER PRODUCTS
+---------------------------------------------------
+
+local PRODUCT_1 = 3586094855
+local PRODUCT_10 =3586749573
+
+
+
+---------------------------------------------------
+-- FUNCIÓN PARA ABRIR LA COMPRA
+---------------------------------------------------
+
+local function promptDonation(productId)
+
+	-- Mostrar ventana oficial de compra
+	MarketplaceService:PromptProductPurchase(
+		player,
+		productId
+	)
+
+end
+
+---------------------------------------------------
+-- BOTÓN DONAR 1
+---------------------------------------------------
+donar1.MouseButton1Click:Connect(function()
+
+	promptDonation(PRODUCT_1)
+end)	
+
+donar10.MouseButton1Click:Connect(function()
+
+	promptDonation(PRODUCT_10)
+
+end)
+
+-- Este código lo uso en este video: 
