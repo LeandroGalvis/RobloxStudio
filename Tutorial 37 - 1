@@ -47,4 +47,4 @@ donar10.MouseButton1Click:Connect(function()
 
 end)
 
--- Este código lo uso en este video: 
+-- Este código lo uso en este video: https://youtu.be/pca0Q0DoClU
