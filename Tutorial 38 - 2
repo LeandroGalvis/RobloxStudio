@@ -1,0 +1,74 @@
+--Tutorial 38: Donaciones con botones 3d - Server Script
+---------------------------------------------------
+-- SERVICIOS
+---------------------------------------------------
+
+-- Servicio de compras
+local MarketplaceService = game:GetService("MarketplaceService")
+
+-- ReplicatedStorage
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+---------------------------------------------------
+-- REMOTEEVENT
+---------------------------------------------------
+
+local donationRemote = ReplicatedStorage:WaitForChild("DonationRemote")
+
+---------------------------------------------------
+-- IDs DE LOS PRODUCTOS
+---------------------------------------------------
+
+local PRODUCT_1 = 3586094855
+local PRODUCT_10 = 3586749573
+
+---------------------------------------------------
+-- ESCUCHAR PETICIONES DEL CLIENTE
+---------------------------------------------------
+
+donationRemote.OnServerEvent:Connect(function(player, donationType)
+
+	------------------------------------------------
+	-- DONACIÓN DE 1 ROBUX
+	------------------------------------------------
+
+	if donationType == 1 then
+
+		MarketplaceService:PromptProductPurchase(
+			player,
+			PRODUCT_1
+		)
+
+		------------------------------------------------
+		-- DONACIÓN DE 10 ROBUX
+		------------------------------------------------
+
+	elseif donationType == 10 then
+
+		MarketplaceService:PromptProductPurchase(
+			player,
+			PRODUCT_10
+		)
+
+	end
+
+end)
+
+---------------------------------------------------
+-- CONFIRMAR COMPRAS
+---------------------------------------------------
+
+local function processReceipt(receiptInfo)
+
+	print("Compra completada")
+
+	return Enum.ProductPurchaseDecision.PurchaseGranted
+end
+
+---------------------------------------------------
+-- ROBLOX USARÁ ESTA FUNCIÓN
+---------------------------------------------------
+
+MarketplaceService.ProcessReceipt = processReceipt
+
+--Este script lo uso en este video: 
