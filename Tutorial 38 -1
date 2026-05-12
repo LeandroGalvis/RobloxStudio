@@ -1,0 +1,52 @@
+--Tutorial 38: Donaciones con botones 3d - Client Script, va en StarterPlayerScripts
+---------------------------------------------------
+-- SERVICIOS
+---------------------------------------------------
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+---------------------------------------------------
+-- REMOTEEVENT
+---------------------------------------------------
+
+local donationRemote = ReplicatedStorage:WaitForChild("DonationRemote")
+
+---------------------------------------------------
+-- REFERENCIAS A BOTONES
+---------------------------------------------------
+
+local donate1 = workspace:WaitForChild("DonateItems"):WaitForChild("Donate1")
+local donate10 = workspace:WaitForChild("DonateItems"):WaitForChild("Donate10")
+
+---------------------------------------------------
+-- CLICKDETECTORS
+---------------------------------------------------
+
+local click1 = donate1:WaitForChild("ClickDetector")
+local click10 = donate10:WaitForChild("ClickDetector")
+
+---------------------------------------------------
+-- CLICK BOTÓN 1 ROBUX
+---------------------------------------------------
+
+click1.MouseClick:Connect(function()
+
+	------------------------------------------------
+	-- AVISAR AL SERVIDOR
+	------------------------------------------------
+
+	donationRemote:FireServer(1)
+
+end)
+
+---------------------------------------------------
+-- CLICK BOTÓN 10 ROBUX
+---------------------------------------------------
+
+click10.MouseClick:Connect(function()
+
+	donationRemote:FireServer(10)
+
+end)
+
+--Este scriipt lo uso en este video: 
